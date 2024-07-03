@@ -1,5 +1,5 @@
 import { data, output } from "./dataSets";
-import { generateKeys } from "./../index";
+import { generateKeys, encodeData } from "./../index";
 const { keys, encodedData } = output;
 
 describe("Encoding", () => {
@@ -8,6 +8,7 @@ describe("Encoding", () => {
     expect(generateKeys(data)).toEqual(keys);
   });
   test("should encode to a barcode", () => {
-    console.log(data);
+    const encodedData = encodeData(data);
+    console.log(encodedData);
   });
 });

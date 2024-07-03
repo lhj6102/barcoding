@@ -89,7 +89,7 @@ const encodedData = [
     },
     filterable: {
       // binary encoded
-      engravings: "1100", // 원o 저o 버x 중x
+      engravings: "1110", // 원o 저o 버x 중x
       selectedSkills: "11110", // 종o 천o 익o 애o 천x
       tierSets: "10", // 2악4지o 6갈망x
       stats: "10", // 특치o 신특x

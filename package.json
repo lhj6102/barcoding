@@ -32,5 +32,8 @@
     "ts-jest": "^29.1.5",
     "typescript": "^5.5.3",
     "undici-types": "^6.19.2"
+  },
+  "dependencies": {
+    "bit-vec": "^1.0.4"
   }
 }

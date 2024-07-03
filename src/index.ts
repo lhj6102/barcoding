@@ -1,8 +1,5 @@
-export function myFunction(param: string): string {
-  return `Hello, ${param}!`;
-}
-
 export function generateKeys(data: any) {
+  // Generate sortKey and filterKey without duplicates
   const sortKey: any = {};
   const filterKey: any = {};
   for (const row of data) {
@@ -24,8 +21,8 @@ export function generateKeys(data: any) {
       }
     }
   }
-  // Change set to array
 
+  // Change set to array
   for (const key in sortKey) {
     sortKey[key] = Array.from(sortKey[key]);
   }
@@ -39,4 +36,56 @@ export function generateKeys(data: any) {
   };
 }
 
-export function encoder(keys: any) {}
+function getGetIndexFunction(key: any) {
+  // key: {groupA: [a1, a2, a3], groupB: [b1, b2]}
+  // return (groupName, value) => index
+  // Using hash map for O(1) lookup
+  const indexMap: any = {};
+  for (const groupName in key) {
+    indexMap[groupName] = {};
+    for (let i = 0; i < key[groupName].length; i++) {
+      indexMap[groupName][key[groupName][i]] = i;
+    }
+  }
+  return (groupName: string, value: string) => indexMap[groupName][value] ?? -1;
+}
+
+export function encodeDataWithKeys(keys: any, data: any) {
+  const { sortKey, filterKey } = keys;
+  const getSortKeyIndex = getGetIndexFunction(sortKey);
+  const getFilterKeyIndex = getGetIndexFunction(filterKey);
+
+  const encodedData = data.map((row: any) => {
+    const { sortable, filterable, ...identifier } = row;
+    const sortableEncoded: any = {};
+    const filterableEncoded: any = {};
+    for (const groupName in sortable) {
+      sortableEncoded[groupName] = new Array(sortKey[groupName].length).fill(0);
+      for (const sortableKey in sortable[groupName]) {
+        const index = getSortKeyIndex(groupName, sortableKey);
+        sortableEncoded[groupName][index] = sortable[groupName][sortableKey];
+      }
+    }
+    for (const groupName in filterable) {
+      // binary encoding for filterable use array buffer then convert to string
+      const filterableArray = new Uint8Array(filterKey[groupName].length);
+      for (const value of filterable[groupName]) {
+        const index = getFilterKeyIndex(groupName, value);
+        filterableArray[index] = 1;
+      }
+      filterableEncoded[groupName] = String.fromCharCode(...filterableArray);
+    }
+    return {
+      identifier: identifier,
+      sortable: sortableEncoded,
+      filterable: filterableEncoded,
+    };
+  });
+
+  return encodedData;
+}
+
+export function encodeData(data: any) {
+  const keys = generateKeys(data);
+  return encodeDataWithKeys(keys, data);
+}
