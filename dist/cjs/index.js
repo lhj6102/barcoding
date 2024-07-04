@@ -1,104 +1,73 @@
 "use strict";
-var __rest = (this && this.__rest) || function (s, e) {
-    var t = {};
-    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
-        t[p] = s[p];
-    if (s != null && typeof Object.getOwnPropertySymbols === "function")
-        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
-            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
-                t[p[i]] = s[p[i]];
-        }
-    return t;
+var __classPrivateFieldSet = (this && this.__classPrivateFieldSet) || function (receiver, state, value, kind, f) {
+    if (kind === "m") throw new TypeError("Private method is not writable");
+    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a setter");
+    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot write private member to an object whose class did not declare it");
+    return (kind === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value)), value;
+};
+var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (receiver, state, kind, f) {
+    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a getter");
+    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
+    return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
 };
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
+var _Barcoding_instances, _Barcoding_data, _Barcoding_isSet, _Barcoding_encodeData;
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.generateKeys = generateKeys;
-exports.encodeDataWithKeys = encodeDataWithKeys;
-exports.encodeData = encodeData;
-const BitArray_1 = __importDefault(require("./BitArray"));
-function generateKeys(data) {
-    // Generate sortKey and filterKey without duplicates
-    const sortKey = {};
-    const filterKey = {};
-    for (const row of data) {
-        const { sortable, filterable } = row;
-        for (const key in sortable) {
-            if (!sortKey[key]) {
-                sortKey[key] = new Set();
-            }
-            for (const sortableKey in sortable[key]) {
-                sortKey[key].add(sortableKey);
-            }
+const encodeData_1 = require("./encode/encodeData");
+const decodeRow_1 = __importDefault(require("./decode/decodeRow"));
+/**
+ * Barcode generation and encoded data handling
+ */
+class Barcoding {
+    constructor(inputData, isEncoded = false) {
+        _Barcoding_instances.add(this);
+        _Barcoding_data.set(this, void 0);
+        _Barcoding_isSet.set(this, void 0);
+        if (inputData) {
+            __classPrivateFieldSet(this, _Barcoding_isSet, true, "f");
+            // check if input data is already encoded
+            __classPrivateFieldSet(this, _Barcoding_data, isEncoded
+                ? inputData
+                : __classPrivateFieldGet(this, _Barcoding_instances, "m", _Barcoding_encodeData).call(this, inputData), "f");
         }
-        for (const key in filterable) {
-            if (!filterKey[key]) {
-                filterKey[key] = new Set();
-            }
-            for (const value of filterable[key]) {
-                filterKey[key].add(value);
-            }
-        }
-    }
-    // Change set to array
-    for (const key in sortKey) {
-        sortKey[key] = Array.from(sortKey[key]);
-    }
-    for (const key in filterKey) {
-        filterKey[key] = Array.from(filterKey[key]);
-    }
-    return {
-        sortKey,
-        filterKey,
-    };
-}
-function getGetIndexFunction(key) {
-    // key: {groupA: [a1, a2, a3], groupB: [b1, b2]}
-    // return (groupName, value) => index
-    // Using hash map for O(1) lookup
-    const indexMap = {};
-    for (const groupName in key) {
-        indexMap[groupName] = {};
-        for (let i = 0; i < key[groupName].length; i++) {
-            indexMap[groupName][key[groupName][i]] = i;
+        else {
+            __classPrivateFieldSet(this, _Barcoding_isSet, false, "f");
+            __classPrivateFieldSet(this, _Barcoding_data, {
+                keys: {
+                    sortKey: {},
+                    filterKey: {},
+                },
+                enData: [],
+            }, "f");
         }
     }
-    return (groupName, value) => { var _a; return (_a = indexMap[groupName][value]) !== null && _a !== void 0 ? _a : -1; };
-}
-function encodeDataWithKeys(keys, data) {
-    const { sortKey, filterKey } = keys;
-    const getSortKeyIndex = getGetIndexFunction(sortKey);
-    const getFilterKeyIndex = getGetIndexFunction(filterKey);
-    const encodedData = data.map((row) => {
-        const { sortable, filterable } = row, identifier = __rest(row, ["sortable", "filterable"]);
-        const sortableEncoded = {};
-        const filterableEncoded = {};
-        for (const groupName in sortable) {
-            sortableEncoded[groupName] = new Array(sortKey[groupName].length).fill(0);
-            for (const sortableKey in sortable[groupName]) {
-                const index = getSortKeyIndex(groupName, sortableKey);
-                sortableEncoded[groupName][index] = sortable[groupName][sortableKey];
-            }
+    // setData
+    setData(data) {
+        __classPrivateFieldSet(this, _Barcoding_data, data, "f");
+        __classPrivateFieldSet(this, _Barcoding_isSet, true, "f");
+    }
+    // setDataFromRawData
+    setDataFromRawData(rawData) {
+        __classPrivateFieldSet(this, _Barcoding_data, __classPrivateFieldGet(this, _Barcoding_instances, "m", _Barcoding_encodeData).call(this, rawData), "f");
+        __classPrivateFieldSet(this, _Barcoding_isSet, true, "f");
+    }
+    getEncodedData() {
+        if (!__classPrivateFieldGet(this, _Barcoding_isSet, "f")) {
+            throw new Error("Data is not set");
         }
-        for (const groupName in filterable) {
-            // binary encoding for filterable use array buffer then convert to string
-            const filterableArray = new BitArray_1.default(filterKey[groupName].length);
-            for (const value of filterable[groupName]) {
-                const index = getFilterKeyIndex(groupName, value);
-                filterableArray.setBit(index);
-            }
-            filterableEncoded[groupName] = filterableArray.getBitArray();
-        }
-        return {
-            identifier: identifier,
-            sortable: sortableEncoded,
-            filterable: filterableEncoded,
-        };
-    });
-    return encodedData;
+        return __classPrivateFieldGet(this, _Barcoding_data, "f");
+    }
+    // getKeys
+    getKeys() {
+        return __classPrivateFieldGet(this, _Barcoding_data, "f").keys;
+    }
+    decodeRow(index) {
+        return (0, decodeRow_1.default)(__classPrivateFieldGet(this, _Barcoding_data, "f").enData[index], __classPrivateFieldGet(this, _Barcoding_data, "f").keys);
+    }
 }
-function encodeData(data) {
-    const keys = generateKeys(data);
-    return encodeDataWithKeys(keys, data);
-}
+_Barcoding_data = new WeakMap(), _Barcoding_isSet = new WeakMap(), _Barcoding_instances = new WeakSet(), _Barcoding_encodeData = function _Barcoding_encodeData(rawData) {
+    return (0, encodeData_1.encodeData)(rawData);
+};
+exports.default = Barcoding;

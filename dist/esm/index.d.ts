@@ -1,6 +1,15 @@
-export declare function generateKeys(data: any): {
-    sortKey: any;
-    filterKey: any;
-};
-export declare function encodeDataWithKeys(keys: any, data: any): any;
-export declare function encodeData(data: any): any;
+import EncodedData from "./models/EncodedData";
+import Keys from "./models/Keys";
+import RawData, { RawDataRow } from "./models/RawData";
+/**
+ * Barcode generation and encoded data handling
+ */
+export default class Barcoding<T> {
+    #private;
+    constructor(inputData?: RawData<T> | EncodedData<T>, isEncoded?: boolean);
+    setData(data: EncodedData<T>): void;
+    setDataFromRawData(rawData: RawData<T>): void;
+    getEncodedData(): EncodedData<T>;
+    getKeys(): Keys;
+    decodeRow(index: number): RawDataRow<T>;
+}

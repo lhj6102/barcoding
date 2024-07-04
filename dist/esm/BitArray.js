@@ -4,13 +4,43 @@ export default class BitArray {
         this.arraySize = Math.ceil(totalBits / 32);
         this.bitArray = bitArray || new Array(this.arraySize).fill(0);
     }
-    setBit(index) {
+    /**
+     * OR operator for two raw bit arrays
+     * Does not check for array length equality to lower overhead
+     */
+    static bitArrayOr(bitArray1, bitArray2) {
+        return bitArray1.map((value, index) => value | bitArray2[index]);
+    }
+    /**
+     * AND operator for two raw bit arrays
+     * Does not check for array length equality to lower overhead
+     */
+    static bitArrayAnd(bitArray1, bitArray2) {
+        return bitArray1.map((value, index) => value & bitArray2[index]);
+    }
+    /**
+     * Equality check for two raw bit arrays
+     * Does not check for array length equality to lower overhead. Only use bitArray1 elements as reference.
+     */
+    static bitArrayEqual(bitArray1, bitArray2) {
+        return bitArray1.every((value, index) => value === bitArray2[index]);
+    }
+    static bitArrayIsZero(bitArray) {
+        return bitArray.every((value) => value === 0);
+    }
+    setBit(index, value = true) {
         if (index >= this.totalBits || index < 0) {
             throw new Error(`Index ${index} is out of bounds for totalBits ${this.totalBits}`);
         }
         const arrayIndex = Math.floor(index / 32);
         const bitPosition = index % 32;
-        this.bitArray[arrayIndex] |= 1 << bitPosition;
+        // if value is truthy, set the bit to 1
+        if (value) {
+            this.bitArray[arrayIndex] |= 1 << bitPosition;
+        }
+        else {
+            this.bitArray[arrayIndex] &= ~(1 << bitPosition);
+        }
     }
     getBit(index) {
         if (index >= this.totalBits || index < 0) {
@@ -28,6 +58,9 @@ export default class BitArray {
     }
     fromJSON(json) {
         this.bitArray = JSON.parse(json);
+    }
+    setAll(bool) {
+        this.bitArray = new Array(this.arraySize).fill(bool ? 0xffffffff : 0);
     }
     // OR 연산
     or(other) {
