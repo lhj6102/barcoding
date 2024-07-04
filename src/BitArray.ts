@@ -41,7 +41,7 @@ export default class BitArray {
     return bitArray1.every((value, index) => value === bitArray2[index]);
   }
 
-  setBit(index: number): void {
+  setBit(index: number, value: boolean | number = true): void {
     if (index >= this.totalBits || index < 0) {
       throw new Error(
         `Index ${index} is out of bounds for totalBits ${this.totalBits}`
@@ -49,7 +49,13 @@ export default class BitArray {
     }
     const arrayIndex = Math.floor(index / 32);
     const bitPosition = index % 32;
-    this.bitArray[arrayIndex] |= 1 << bitPosition;
+    // if value is truthy, set the bit to 1
+    console.log(value);
+    if (value) {
+      this.bitArray[arrayIndex] |= 1 << bitPosition;
+    } else {
+      this.bitArray[arrayIndex] &= ~(1 << bitPosition);
+    }
   }
 
   getBit(index: number): boolean {
@@ -73,6 +79,10 @@ export default class BitArray {
 
   fromJSON(json: string): void {
     this.bitArray = JSON.parse(json);
+  }
+
+  setAll(bool: boolean) {
+    this.bitArray = new Array(this.arraySize).fill(bool ? 0xffffffff : 0);
   }
 
   // OR 연산
