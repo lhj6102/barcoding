@@ -1,32 +1,69 @@
-// sort & filter & ratio
-export function filterAndSortEncodedData(
-  encodedData: any,
-  sortGroup: string | "",
-  sortTarget: string | "",
-  filters: {
-    [key: string]: {
-      includes: string[];
-      excludes: string[];
-    };
+import { encodeData } from "./encode/encodeData";
+import EncodedData from "./models/EncodedData";
+import Keys from "./models/Keys";
+import RawData from "./models/RawData";
+
+/**
+ * Barcode generation and encoded data handling
+ */
+export default class Barcoding<T> {
+  #data: EncodedData<T>;
+  #isSet: boolean;
+  constructor(
+    inputData?: RawData<T> | EncodedData<T>,
+    isEncoded: boolean = false
+  ) {
+    if (inputData) {
+      this.#isSet = true;
+      // check if input data is already encoded
+      this.#data = isEncoded
+        ? (inputData as EncodedData<T>)
+        : this.#encodeData(inputData as RawData<T>);
+    } else {
+      this.#isSet = false;
+      this.#data = {
+        keys: {
+          sortKey: {},
+          filterKey: {},
+        },
+        enData: [],
+      };
+    }
   }
-) {
-  const { keys, enData } = encodedData;
-  // Check parameters are valid(use encodedData.keys)
 
-  // Filter data
-  const filteredData = enData.filter((row: any) => {
-    return true;
-  });
-  // get row data and check if it passes filter
-  // if it passes, add data count (e.g. filterDataCount[group][index]++), (e.g. filterGroupA:[3] => ["00011"] => filterDataCount[filterGroupA][0]++, filterDataCount[filterGroupA][1]++)
-  // add total data count
+  #encodeData(rawData: RawData<T>): EncodedData<T> {
+    return encodeData<T>(rawData);
+  }
 
-  // Get ratio of filter data count
+  // setData
+  setData(data: EncodedData<T>): void {
+    this.#data = data;
+    this.#isSet = true;
+  }
 
-  // Sort data with sortGroup and sortTarget
+  // setDataFromRawData
+  setDataFromRawData(rawData: RawData<T>): void {
+    this.#data = this.#encodeData(rawData);
+    this.#isSet = true;
+  }
 
-  // return {
-  //   enData:
-  //   keys,
-  // };
+  getEncodedData(): EncodedData<T> {
+    if (!this.#isSet) {
+      throw new Error("Data is not set");
+    }
+    return this.#data;
+  }
+
+  // getKeys
+  getKeys(): Keys {
+    return this.#data.keys;
+  }
+
+  // filterData => return another Barcoding instance
+
+  // getTotalCount
+  // getFilterElementCount
+  // getFilterElementRatio
+
+  // decodeData (using index)
 }

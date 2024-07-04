@@ -1,5 +1,5 @@
 import { data as input, encodedData as output } from "./dataSets";
-import { filterAndSortEncodedData } from "../src/index";
+import { filterAndSortEncodedData } from "../src/encodedDataHandler/filterAndSortEncodedData";
 import { encodeData } from "../src/encode/encodeData";
 import { generateKeys } from "../src/encode/generateKeys";
 const { keys: outputKeys, enData: outputEnData } = output;
