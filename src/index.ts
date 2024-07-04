@@ -1,7 +1,8 @@
 import { encodeData } from "./encode/encodeData";
 import EncodedData from "./models/EncodedData";
 import Keys from "./models/Keys";
-import RawData from "./models/RawData";
+import RawData, { RawDataRow } from "./models/RawData";
+import decodeRow from "./decode/decodeRow";
 
 /**
  * Barcode generation and encoded data handling
@@ -57,6 +58,10 @@ export default class Barcoding<T> {
   // getKeys
   getKeys(): Keys {
     return this.#data.keys;
+  }
+
+  decodeRow(index: number): RawDataRow<T> {
+    return decodeRow(this.#data.enData[index], this.#data.keys);
   }
 
   // filterData => return another Barcoding instance
