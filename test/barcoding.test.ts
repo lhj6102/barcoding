@@ -1,5 +1,5 @@
 import { data, output } from "./dataSets";
-import { generateKeys, encodeData } from "./../index";
+import { generateKeys, encodeData } from "../src/index";
 const { keys, encodedData } = output;
 
 describe("Encoding", () => {

@@ -1,15 +1,14 @@
 {
   "compilerOptions": {
-    "target": "es6",
-    "module": "NodeNext",
-    "moduleResolution": "nodenext",
+    "target": "ES6",
+    "module": "ES6",
     "declaration": true,
-    "outDir": "./dist",
+    "outDir": "./dist/esm",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "types": ["node"]
+    "forceConsistentCasingInFileNames": true,
+    "moduleResolution": "node"
   },
-  "include": ["src"],
-  "exclude": ["node_modules", "**/__tests__/*"]
+  "include": ["src/**/*", "test"]
 }
