@@ -1,4 +1,4 @@
-import { filterRow } from "./../src/encodedDataHandler/filterAndSortEncodedData";
+import { filterRow } from "../src/encodedDataHandler/filterData";
 
 describe("filterRow", () => {
   test("should return true if row passes all filters", () => {

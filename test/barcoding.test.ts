@@ -18,24 +18,24 @@ describe("Encoding", () => {
 
 describe("Filtering and Sorting", () => {
   test("should return same data without sorting and filtering", () => {
-    const filteredData = filterAndSortEncodedData(output, "", "", {});
+    const filteredData = filterAndSortEncodedData(output, "", "", "desc", {});
     // compare object
     expect(filteredData).toEqual(output);
   });
   test("should return error if sort element is not in keys", () => {
     expect(() =>
-      filterAndSortEncodedData(output, "notInKeys", "", {})
+      filterAndSortEncodedData(output, "notInKeys", "", "desc", {})
     ).toThrow();
   });
   test("should return error if filter element is not in keys", () => {
     expect(() =>
-      filterAndSortEncodedData(output, "", "", {
+      filterAndSortEncodedData(output, "", "", "desc", {
         notInKeys: { includes: [], excludes: [] },
       })
     ).toThrow();
   });
   test("should filter data", () => {
-    const filteredData = filterAndSortEncodedData(output, "", "", {
+    const filteredData = filterAndSortEncodedData(output, "", "", "desc", {
       engravings: { includes: ["버스트"] },
     });
     // compare object
@@ -45,7 +45,7 @@ describe("Filtering and Sorting", () => {
     });
   });
   test("should filter data", () => {
-    const filteredData = filterAndSortEncodedData(output, "", "", {
+    const filteredData = filterAndSortEncodedData(output, "", "", "desc", {
       engravings: { excludes: ["버스트"] },
     });
     // compare object
