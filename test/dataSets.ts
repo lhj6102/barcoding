@@ -1,3 +1,5 @@
+import Keys, { Key } from "../src/models/Keys";
+
 const data = [
   {
     identifier: {
@@ -51,7 +53,7 @@ const data = [
 ];
 
 // output
-const sortKey = {
+const sortKey: Key = {
   skillDPS: ["종말의 날", "천벌", "익스플로전"],
   skillDamage: [
     "종말의 날",
@@ -63,7 +65,7 @@ const sortKey = {
   buff: ["상시", "순간"],
 };
 
-const filterKey = {
+const filterKey: Key = {
   engravings: ["원한", "저주받은 인형", "버스트", "중갑 착용"],
   selectedSkills: [
     "종말의 날",
@@ -76,7 +78,7 @@ const filterKey = {
   stats: ["특치", "신특"],
 };
 
-const keys = {
+const keys: Keys = {
   sortKey,
   filterKey,
 };

@@ -1,5 +1,9 @@
 import { data as input, encodedData as output } from "./dataSets";
-import { generateKeys, encodeData } from "../src/index";
+import {
+  generateKeys,
+  encodeData,
+  filterAndSortEncodedData,
+} from "../src/index";
 const { keys: outputKeys, enData: outputEnData } = output;
 
 describe("Encoding", () => {
@@ -11,6 +15,24 @@ describe("Encoding", () => {
     const encodedData = encodeData(input);
     // compare object
     expect(encodedData).toEqual(output);
+  });
+});
+
+describe("Filtering and Sorting", () => {
+  test("should return same data without sorting and filtering", () => {
+    const filteredData = filterAndSortEncodedData(output, "", "", {});
+    // compare object
+    expect(filteredData).toEqual(output);
+  });
+  test("should return error if sort element is not in keys", () => {
+    expect(() =>
+      filterAndSortEncodedData(output, "notInKeys", "", {})
+    ).toThrow();
+  });
+  test("should return error if filter element is not in keys", () => {
+    expect(() =>
+      filterAndSortEncodedData(output, "", "", { notInKeys: [] })
+    ).toThrow();
   });
 });
 
