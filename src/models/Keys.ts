@@ -1,6 +1,6 @@
 // set interface of keys
-export interface Key {
-  [key: string]: string[];
+export interface Key<T = string[]> {
+  [key: string]: T;
 }
 
 export default interface Keys {

@@ -1,33 +1,39 @@
-export function generateKeys(data: any) {
+import { Key } from "../models/Keys";
+import RawData from "../models/RawData";
+
+export function generateKeys(data: RawData<any>) {
   // Generate sortKey and filterKey without duplicates
-  const sortKey: any = {};
-  const filterKey: any = {};
+  const sortKeySets: Key<Set<string>> = {};
+  const filterKeySets: Key<Set<string>> = {};
   for (const row of data) {
     const { sortable, filterable } = row;
     for (const key in sortable) {
-      if (!sortKey[key]) {
-        sortKey[key] = new Set();
+      if (!sortKeySets[key]) {
+        sortKeySets[key] = new Set();
       }
       for (const sortableKey in sortable[key]) {
-        sortKey[key].add(sortableKey);
+        sortKeySets[key].add(sortableKey);
       }
     }
     for (const key in filterable) {
-      if (!filterKey[key]) {
-        filterKey[key] = new Set();
+      if (!filterKeySets[key]) {
+        filterKeySets[key] = new Set();
       }
       for (const value of filterable[key]) {
-        filterKey[key].add(value);
+        filterKeySets[key].add(value);
       }
     }
   }
 
+  const sortKey: Key = {};
+  const filterKey: Key = {};
+
   // Change set to array
-  for (const key in sortKey) {
-    sortKey[key] = Array.from(sortKey[key]);
+  for (const key in sortKeySets) {
+    sortKey[key] = Array.from(sortKeySets[key]);
   }
-  for (const key in filterKey) {
-    filterKey[key] = Array.from(filterKey[key]);
+  for (const key in filterKeySets) {
+    filterKey[key] = Array.from(filterKeySets[key]);
   }
 
   return {
