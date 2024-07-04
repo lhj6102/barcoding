@@ -1,4 +1,4 @@
-import { encodeDataWithKeys } from "../encodeDataWithKeys";
+import { encodeDataWithKeys } from "./encodeDataWithKeys";
 import EncodedData from "../models/EncodedData";
 import Keys from "../models/Keys";
 import RawData from "../models/RawData";
