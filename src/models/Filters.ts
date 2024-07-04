@@ -1,6 +1,6 @@
 export default interface Filters {
   [key: string]: {
-    includes: string[];
-    excludes: string[];
+    includes?: string[];
+    excludes?: string[];
   };
 }

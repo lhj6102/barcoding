@@ -41,6 +41,10 @@ export default class BitArray {
     return bitArray1.every((value, index) => value === bitArray2[index]);
   }
 
+  static bitArrayIsZero(bitArray: RawBitArray): boolean {
+    return bitArray.every((value) => value === 0);
+  }
+
   setBit(index: number, value: boolean | number = true): void {
     if (index >= this.totalBits || index < 0) {
       throw new Error(
@@ -50,7 +54,6 @@ export default class BitArray {
     const arrayIndex = Math.floor(index / 32);
     const bitPosition = index % 32;
     // if value is truthy, set the bit to 1
-    console.log(value);
     if (value) {
       this.bitArray[arrayIndex] |= 1 << bitPosition;
     } else {
