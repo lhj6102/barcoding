@@ -1,3 +1,5 @@
+import BitArray from "./BitArray";
+
 export function generateKeys(data: any) {
   // Generate sortKey and filterKey without duplicates
   const sortKey: any = {};
@@ -68,12 +70,12 @@ export function encodeDataWithKeys(keys: any, data: any) {
     }
     for (const groupName in filterable) {
       // binary encoding for filterable use array buffer then convert to string
-      const filterableArray = new Uint8Array(filterKey[groupName].length);
+      const filterableArray = new BitArray(filterKey[groupName].length);
       for (const value of filterable[groupName]) {
         const index = getFilterKeyIndex(groupName, value);
-        filterableArray[index] = 1;
+        filterableArray.setBit(index);
       }
-      filterableEncoded[groupName] = String.fromCharCode(...filterableArray);
+      filterableEncoded[groupName] = filterableArray.getBitArray();
     }
     return {
       identifier: identifier,

@@ -9,6 +9,6 @@ describe("Encoding", () => {
   });
   test("should encode to a barcode", () => {
     const encodedData = encodeData(data);
-    console.log(encodedData);
+    console.log(JSON.stringify(encodedData));
   });
 });
