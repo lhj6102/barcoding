@@ -1,42 +1,5 @@
 import BitArray from "./BitArray";
-
-export function generateKeys(data: any) {
-  // Generate sortKey and filterKey without duplicates
-  const sortKey: any = {};
-  const filterKey: any = {};
-  for (const row of data) {
-    const { sortable, filterable } = row;
-    for (const key in sortable) {
-      if (!sortKey[key]) {
-        sortKey[key] = new Set();
-      }
-      for (const sortableKey in sortable[key]) {
-        sortKey[key].add(sortableKey);
-      }
-    }
-    for (const key in filterable) {
-      if (!filterKey[key]) {
-        filterKey[key] = new Set();
-      }
-      for (const value of filterable[key]) {
-        filterKey[key].add(value);
-      }
-    }
-  }
-
-  // Change set to array
-  for (const key in sortKey) {
-    sortKey[key] = Array.from(sortKey[key]);
-  }
-  for (const key in filterKey) {
-    filterKey[key] = Array.from(filterKey[key]);
-  }
-
-  return {
-    sortKey,
-    filterKey,
-  };
-}
+import { generateKeys } from "./encode/generateKeys";
 
 function getGetIndexFunction(key: any) {
   // key: {groupA: [a1, a2, a3], groupB: [b1, b2]}
@@ -97,19 +60,20 @@ export function filterAndSortEncodedData(
   encodedData: any,
   sortGroup: string | "",
   sortTarget: string | "",
-  filters: { [key: string]: {
-    includes: string[];
-    excludes: string[];
-  }},
+  filters: {
+    [key: string]: {
+      includes: string[];
+      excludes: string[];
+    };
+  }
 ) {
   const { keys, enData } = encodedData;
   // Check parameters are valid(use encodedData.keys)
 
   // Filter data
   const filteredData = enData.filter((row: any) => {
-
     return true;
-  }
+  });
   // get row data and check if it passes filter
   // if it passes, add data count (e.g. filterDataCount[group][index]++), (e.g. filterGroupA:[3] => ["00011"] => filterDataCount[filterGroupA][0]++, filterDataCount[filterGroupA][1]++)
   // add total data count
@@ -118,8 +82,8 @@ export function filterAndSortEncodedData(
 
   // Sort data with sortGroup and sortTarget
 
-  return {
-    enData: 
-    keys,
-  };
+  // return {
+  //   enData:
+  //   keys,
+  // };
 }
