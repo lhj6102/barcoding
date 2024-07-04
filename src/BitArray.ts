@@ -8,6 +8,27 @@ export default class BitArray {
     this.arraySize = Math.ceil(totalBits / 32);
     this.bitArray = bitArray || new Array(this.arraySize).fill(0);
   }
+  /**
+   * OR operator for two raw bit arrays
+   * Does not check for array length equality to lower overhead
+   */
+  static bitArrayOr(bitArray1: number[], bitArray2: number[]): number[] {
+    return bitArray1.map((value, index) => value | bitArray2[index]);
+  }
+  /**
+   * AND operator for two raw bit arrays
+   * Does not check for array length equality to lower overhead
+   */
+  static bitArrayAnd(bitArray1: number[], bitArray2: number[]): number[] {
+    return bitArray1.map((value, index) => value & bitArray2[index]);
+  }
+  /**
+   * Equality check for two raw bit arrays
+   * Does not check for array length equality to lower overhead. Only use bitArray1 elements as reference.
+   */
+  static bitArrayEqual(bitArray1: number[], bitArray2: number[]): boolean {
+    return bitArray1.every((value, index) => value === bitArray2[index]);
+  }
 
   setBit(index: number): void {
     if (index >= this.totalBits || index < 0) {

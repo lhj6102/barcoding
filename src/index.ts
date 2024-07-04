@@ -58,7 +58,7 @@ export function encodeDataWithKeys(keys: any, data: any) {
   const getFilterKeyIndex = getGetIndexFunction(filterKey);
 
   const encodedData = data.map((row: any) => {
-    const { sortable, filterable, ...identifier } = row;
+    const { sortable, filterable, identifier } = row;
     const sortableEncoded: any = {};
     const filterableEncoded: any = {};
     for (const groupName in sortable) {
@@ -89,5 +89,37 @@ export function encodeDataWithKeys(keys: any, data: any) {
 
 export function encodeData(data: any) {
   const keys = generateKeys(data);
-  return encodeDataWithKeys(keys, data);
+  return { keys, enData: encodeDataWithKeys(keys, data) };
+}
+
+// sort & filter & ratio
+export function filterAndSortEncodedData(
+  encodedData: any,
+  sortGroup: any,
+  sortTarget: any,
+  filters: any
+) {
+  const { keys, enData } = encodedData;
+  // Check parameters are valid(use encodedData.keys)
+
+  // Filter data and add filter data count
+  // get row data and check if it passes filter
+  // if it passes, add data count (e.g. filterDataCount[group][index]++), (e.g. filterGroupA:[3] => ["00011"] => filterDataCount[filterGroupA][0]++, filterDataCount[filterGroupA][1]++)
+  // add total data count
+
+  // Get ratio of filter data count
+
+  // Sort data with sortGroup and sortTarget
+
+  return {
+    filterElementRatio: {
+      // filterGroupA: {
+      //  filterElementA: 0.5,
+      //  filterElementB: 0.5
+      // }
+    },
+    encodedData: {
+      keys,
+    },
+  };
 }

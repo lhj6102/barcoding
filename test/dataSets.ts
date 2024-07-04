@@ -1,8 +1,10 @@
 const data = [
   {
-    characterName: "푸딩몰래먹은사람",
-    className: "소서리스",
-    id: 4,
+    identifier: {
+      characterName: "푸딩몰래먹은사람",
+      className: "소서리스",
+      id: 4,
+    },
     sortable: {
       skillDPS: {
         "종말의 날": 15000000,
@@ -26,9 +28,11 @@ const data = [
     },
   },
   {
-    characterName: "주다영",
-    className: "바드",
-    id: 5,
+    identifier: {
+      characterName: "주다영",
+      className: "바드",
+      id: 5,
+    },
     sortable: {
       skillDPS: {},
       skillDamage: {},
@@ -76,7 +80,7 @@ const keys = {
   sortKey,
   filterKey,
 };
-const encodedData = [
+const enData = [
   {
     identifier: {
       characterName: "푸딩몰래먹은사람",
@@ -86,13 +90,14 @@ const encodedData = [
     sortable: {
       skillDPS: [15000000, 10000000, 11000000],
       skillDamage: [11000000, 19000000, 9000000, 21000000, 300000000],
+      buff: [0, 0],
     },
     filterable: {
       // binary encoded
-      engravings: "1110", // 원o 저o 버x 중x
-      selectedSkills: "11110", // 종o 천o 익o 애o 천x
-      tierSets: "10", // 2악4지o 6갈망x
-      stats: "10", // 특치o 신특x
+      engravings: [7], // 원o 저o 버x 중x "0111" => 7
+      selectedSkills: [15], // 종o 천o 익o 애o 천x "01111" => 15
+      tierSets: [1], // 2악4지o 6갈망x "01" => 1
+      stats: [1], // 특치o 신특x "01" => 1
     },
   },
   {
@@ -104,19 +109,20 @@ const encodedData = [
     sortable: {
       skillDPS: [0, 0, 0], // no data => 0
       skillDamage: [0, 0, 0, 0, 0], // no data => 0
+      buff: [1.66, 2.01],
     },
     filterable: {
-      engravings: "0001", // 원x 저x 버x 중o
-      selectedSkills: "00001", // 종x 천x 익x 애x 천o
-      tierSets: "01", // 2악4지x 6갈망o
-      stats: "01", // 특치x 신특o
+      engravings: [8], // 원x 저x 버x 중o "1000" => 8
+      selectedSkills: [16], // 종x 천x 익x 애x 천o "10000" => 16
+      tierSets: [2], // 2악4지x 6갈망o => "10" => 2
+      stats: [2], // 특치x 신특o => "10" => 2
     },
   },
 ];
 
-const output = {
+const encodedData = {
   keys,
-  encodedData,
+  enData,
 };
 
-export { data, output };
+export { data, encodedData };
