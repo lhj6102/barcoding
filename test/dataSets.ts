@@ -1,6 +1,14 @@
+import EnData from "../src/models/EnData";
 import Keys, { Key } from "../src/models/Keys";
+import RawData from "../src/models/RawData";
 
-const data = [
+type Identifier = {
+  characterName: string;
+  className: string;
+  id: number;
+};
+
+const data: RawData<Identifier> = [
   {
     identifier: {
       characterName: "푸딩몰래먹은사람",
@@ -82,7 +90,7 @@ const keys: Keys = {
   sortKey,
   filterKey,
 };
-const enData = [
+const enData: EnData<Identifier> = [
   {
     identifier: {
       characterName: "푸딩몰래먹은사람",

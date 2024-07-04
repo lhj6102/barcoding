@@ -1,6 +1,8 @@
 import RawBitArray from "./RawBitArray";
 
-export default interface EnData<T> {
+export default interface EnData<T> extends Array<EnDataRow<T>> {}
+
+export interface EnDataRow<T> {
   identifier: T;
   sortable: {
     [key: string]: number[];

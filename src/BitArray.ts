@@ -1,3 +1,5 @@
+import RawBitArray from "./models/RawBitArray";
+
 export default class BitArray {
   private bitArray: number[];
   private totalBits: number;
@@ -12,21 +14,30 @@ export default class BitArray {
    * OR operator for two raw bit arrays
    * Does not check for array length equality to lower overhead
    */
-  static bitArrayOr(bitArray1: number[], bitArray2: number[]): number[] {
+  static bitArrayOr(
+    bitArray1: RawBitArray,
+    bitArray2: RawBitArray
+  ): RawBitArray {
     return bitArray1.map((value, index) => value | bitArray2[index]);
   }
   /**
    * AND operator for two raw bit arrays
    * Does not check for array length equality to lower overhead
    */
-  static bitArrayAnd(bitArray1: number[], bitArray2: number[]): number[] {
+  static bitArrayAnd(
+    bitArray1: RawBitArray,
+    bitArray2: RawBitArray
+  ): RawBitArray {
     return bitArray1.map((value, index) => value & bitArray2[index]);
   }
   /**
    * Equality check for two raw bit arrays
    * Does not check for array length equality to lower overhead. Only use bitArray1 elements as reference.
    */
-  static bitArrayEqual(bitArray1: number[], bitArray2: number[]): boolean {
+  static bitArrayEqual(
+    bitArray1: RawBitArray,
+    bitArray2: RawBitArray
+  ): boolean {
     return bitArray1.every((value, index) => value === bitArray2[index]);
   }
 
