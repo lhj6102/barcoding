@@ -199,6 +199,7 @@ function generateRandomRow(id: number): RawDataRow<Identifier> {
       for (const option of selectedOptions) {
         group[option] = randomInt(0, 200000000);
       }
+      sortable[groupName] = group;
     }
 
     return sortable;
