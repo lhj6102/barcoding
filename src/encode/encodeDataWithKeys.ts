@@ -15,7 +15,7 @@ export function encodeDataWithKeys<T>(keys: Keys, data: RawData<T>): EnData<T> {
   const enData: EnData<T> = data.map((row: RawDataRow<T>) => {
     const { sortable, filterable, identifier } = row;
     const sortableEncoded: {
-      [groupName: string]: RawBitArray;
+      [groupName: string]: number[];
     } = {};
     const filterableEncoded: {
       [groupName: string]: RawBitArray;
@@ -24,7 +24,8 @@ export function encodeDataWithKeys<T>(keys: Keys, data: RawData<T>): EnData<T> {
       sortableEncoded[groupName] = new Array(sortKey[groupName].length).fill(0);
       for (const sortableKey in sortable[groupName]) {
         const index: number = getSortKeyIndex(groupName, sortableKey);
-        sortableEncoded[groupName][index] = sortable[groupName][sortableKey];
+        sortableEncoded[groupName][index] =
+          sortable[groupName][sortableKey] ?? 0;
       }
     }
     for (const groupName in filterable) {

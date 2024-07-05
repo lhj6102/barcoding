@@ -60,9 +60,7 @@ export default function filterData<T>(
 
   // for each row, check if it passes filter
   const filteredEnData = enData.filter((row, idx) => {
-    const pass = filterRow(row, rawBitArrayFilters);
-    console.log("🚀 ~ filteredData ~ idx:", idx, pass);
-
+    // const pass = filterRow(row, rawBitArrayFilters);
     return filterRow(row, rawBitArrayFilters);
   });
 
