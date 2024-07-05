@@ -4,6 +4,7 @@ import genData10000 from "./genData10000.json";
 // import genData100000 from "./genData100000.json";
 import Barcoding from "../src";
 import RawData from "../src/models/RawData";
+import fs from "fs";
 
 type Identifier = {
   characterName: string;
@@ -50,12 +51,17 @@ describe("should compare encoded data size", () => {
   test("should compare encoded data size", () => {
     const data10000 = genData10000 as RawData<Identifier>;
     const data10000Barcode = new Barcoding<Identifier>(data10000);
+    const encodedData = data10000Barcode.getEncodedData();
 
     const rawLength = JSON.stringify(data10000).length;
     const barcodeLength = JSON.stringify(
       data10000Barcode.getEncodedData()
     ).length;
-    console.log("🚀 ~ test ~ rawLength:", rawLength);
-    console.log("🚀 ~ test ~ barcodeLength:", barcodeLength);
+
+    // saveToJSON(encodedData, "encodedData10000");
   });
 });
+
+function saveToJSON(data: any, fileName: string) {
+  fs.writeFileSync(`./___test___/${fileName}.json`, JSON.stringify(data));
+}
