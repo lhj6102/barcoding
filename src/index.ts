@@ -3,6 +3,8 @@ import EncodedData from "./models/EncodedData";
 import Keys from "./models/Keys";
 import RawData, { RawDataRow } from "./models/RawData";
 import decodeRow from "./decode/decodeRow";
+import filterAndSortEncodedData from "./encodedDataHandler/filterAndSortEncodedData";
+import Filters from "./models/Filters";
 
 /**
  * Barcode generation and encoded data handling
@@ -62,6 +64,25 @@ export default class Barcoding<T> {
 
   decodeRow(index: number): RawDataRow<T> {
     return decodeRow(this.#data.enData[index], this.#data.keys);
+  }
+
+  filterAndSortData(
+    sortGroup: string | "" = "",
+    sortOption: string | "" = "",
+    sortDirection: "asc" | "desc" = "desc",
+    filters: Filters = {}
+  ) {
+    return filterAndSortEncodedData<T>(
+      this.#data,
+      sortGroup,
+      sortOption,
+      sortDirection,
+      filters
+    );
+  }
+
+  length(): number {
+    return this.#data.enData.length;
   }
 
   // filterData => return another Barcoding instance

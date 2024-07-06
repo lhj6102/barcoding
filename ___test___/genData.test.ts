@@ -1,9 +1,8 @@
-import genData2 from "./genData2.json";
-import genData1000 from "./genData1000.json";
-import genData10000 from "./genData10000.json";
+import genData2 from "./json/genData2.json";
+import genData1000 from "./json/genData1000.json";
+import genData10000 from "./json/genData10000.json";
 import Barcoding from "../src";
 import RawData from "../src/models/RawData";
-import fs from "fs";
 
 type Identifier = {
   characterName: string;
