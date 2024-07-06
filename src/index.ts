@@ -20,7 +20,7 @@ export default class Barcoding<T> {
     if (inputData) {
       this.#isSet = true;
       // check if input data is already encoded
-      const isEncoded = (inputData as EncodedData<T>).keys !== undefined;
+      const isEncoded = (inputData as EncodedData<T>).enData !== undefined;
       this.#data = isEncoded
         ? (inputData as EncodedData<T>)
         : this.#encodeData(inputData as RawData<T>);
