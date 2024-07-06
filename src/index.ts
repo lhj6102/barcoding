@@ -5,6 +5,8 @@ import RawData, { RawDataRow } from "./models/RawData";
 import decodeRow from "./decode/decodeRow";
 import filterAndSortEncodedData from "./encodedDataHandler/filterAndSortEncodedData";
 import Filters from "./models/Filters";
+import FilterOptionCount from "./models/FilterOptionCount";
+import filterOptionCounter from "./encodedDataHandler/filterOptionCounter";
 
 /**
  * Barcode generation and encoded data handling
@@ -12,13 +14,11 @@ import Filters from "./models/Filters";
 export default class Barcoding<T> {
   #data: EncodedData<T>;
   #isSet: boolean;
-  constructor(
-    inputData?: RawData<T> | EncodedData<T>,
-    isEncoded: boolean = false
-  ) {
+  constructor(inputData?: RawData<T> | EncodedData<T>) {
     if (inputData) {
       this.#isSet = true;
       // check if input data is already encoded
+      const isEncoded = (inputData as EncodedData<T>).keys !== undefined;
       this.#data = isEncoded
         ? (inputData as EncodedData<T>)
         : this.#encodeData(inputData as RawData<T>);
@@ -83,6 +83,10 @@ export default class Barcoding<T> {
 
   length(): number {
     return this.#data.enData.length;
+  }
+
+  getFilterOptionCount(): FilterOptionCount {
+    return filterOptionCounter<T>(this.#data);
   }
 
   // filterData => return another Barcoding instance

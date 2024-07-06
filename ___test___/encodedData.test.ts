@@ -14,7 +14,7 @@ describe("should use encoded data", () => {
   const data = parseJSONFile<EncodedData<Identifier>>(
     "./___test___/json/encodedData50000.json"
   );
-  const dataBarcode = new Barcoding<Identifier>(data, true);
+  const dataBarcode = new Barcoding<Identifier>(data);
   test("should construct encoded data", () => {
     const encodedData = dataBarcode.getEncodedData();
   });
@@ -24,8 +24,7 @@ describe("should use encoded data", () => {
     const sortGroup = "skillDPS";
     const sortOption = "천벌";
     const sortedData = new Barcoding<Identifier>(
-      dataBarcode.filterAndSortData(sortGroup, sortOption, "desc", {}),
-      true
+      dataBarcode.filterAndSortData(sortGroup, sortOption, "desc", {})
     );
     for (let i = 0; i < 10; i++) {
       console.log(sortedData.decodeRow(i).sortable.skillDPS);
@@ -43,8 +42,7 @@ describe("should use encoded data", () => {
         tierSets: {
           includes: ["6악몽"],
         },
-      }),
-      true
+      })
     );
   });
 
@@ -59,8 +57,7 @@ describe("should use encoded data", () => {
         tierSets: {
           includes: ["6악몽"],
         },
-      }),
-      true
+      })
     );
     for (let i = 0; i < 10; i++) {
       console.log(filteredData.decodeRow(i));

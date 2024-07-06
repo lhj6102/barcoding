@@ -45,6 +45,18 @@ export default class BitArray {
     return bitArray.every((value) => value === 0);
   }
 
+  static bitArrayBitIndexes(bitArray: RawBitArray): number[] {
+    const indexes: number[] = [];
+    bitArray.forEach((value, arrayIndex) => {
+      for (let bitIndex = 0; bitIndex < 32; bitIndex++) {
+        if ((value & (1 << bitIndex)) !== 0) {
+          indexes.push(arrayIndex * 32 + bitIndex);
+        }
+      }
+    });
+    return indexes;
+  }
+
   setBit(index: number, value: boolean | number = true): void {
     if (index >= this.totalBits || index < 0) {
       throw new Error(

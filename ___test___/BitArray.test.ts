@@ -18,3 +18,11 @@ describe("BitArray test", () => {
     // expect(bitArray.getBit(31)).toBe(true);
   });
 });
+
+describe("RawBitArray static methods test", () => {
+  test("should get bit indexes", () => {
+    const rawBitArray = [1, 1023];
+    const indexes = BitArray.bitArrayBitIndexes(rawBitArray);
+    console.log(indexes);
+  });
+});
