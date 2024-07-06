@@ -1,7 +1,6 @@
 // import encodedData50000 from "./json/encodedData50000.json";
 import EncodedData from "../src/models/EncodedData";
 import Barcoding from "../src";
-import fs from "fs";
 import parseJSONFile from "./parseJSONFile";
 
 type Identifier = {
@@ -79,5 +78,28 @@ describe("should use encoded data", () => {
     console.log(filterOptionCounts, filterOptionRatios);
 
     console.log(barcode.decodeRow(0), barcode.decodeRow(1));
+  });
+  test("should count filter options for all data", () => {
+    const filterOptionCounts = dataBarcode.getFilterOptionCounts();
+    const filterOptionRatios = dataBarcode.getFilterOptionRatios();
+    console.log(filterOptionCounts, filterOptionRatios);
+  });
+
+  test("should count filter options for filtered data", () => {
+    const filteredData = new Barcoding<Identifier>(
+      dataBarcode.filterAndSortData("skillDPS", "천벌", "desc", {
+        engravings: {
+          includes: ["점화"],
+          excludes: ["환류"],
+        },
+        tierSets: {
+          includes: ["6악몽"],
+        },
+      })
+    );
+    const filterOptionRatios = filteredData.getFilterOptionRatios();
+    expect(filterOptionRatios.engravings["점화"]).toBe(1);
+    expect(filterOptionRatios.engravings["환류"]).toBe(0);
+    expect(filterOptionRatios.tierSets["6악몽"]).toBe(1);
   });
 });
