@@ -1,6 +1,7 @@
 import Barcoding from "../src";
 import RawData from "../src/models/RawData";
 import parseJSONFile from "./parseJSONFile";
+import fs from "fs";
 
 type Identifier = {
   characterName: string;
@@ -17,6 +18,10 @@ describe("should compare encoded data size", () => {
     const encodedData = dataBarcode.getEncodedData();
     const rawLength = JSON.stringify(data).length;
     const barcodeLength = JSON.stringify(dataBarcode.getEncodedData()).length;
-    // saveToJSON(encodedData, "encodedData");
+    saveToJSON(encodedData, "encodedData50000");
   });
 });
+
+function saveToJSON(data: any, fileName: string) {
+  fs.writeFileSync(`./___test___/${fileName}.json`, JSON.stringify(data));
+}
