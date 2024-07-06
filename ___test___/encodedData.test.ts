@@ -63,4 +63,21 @@ describe("should use encoded data", () => {
       console.log(filteredData.decodeRow(i));
     }
   });
+
+  test("should count filter options", () => {
+    const dataWithTwoRows = [
+      dataBarcode.getEncodedData().enData[0],
+      dataBarcode.getEncodedData().enData[1],
+    ];
+    const barcode = new Barcoding<Identifier>({
+      keys: dataBarcode.getKeys(),
+      enData: dataWithTwoRows,
+    });
+
+    const filterOptionCounts = barcode.getFilterOptionCounts();
+    const filterOptionRatios = barcode.getFilterOptionRatios();
+    console.log(filterOptionCounts, filterOptionRatios);
+
+    console.log(barcode.decodeRow(0), barcode.decodeRow(1));
+  });
 });

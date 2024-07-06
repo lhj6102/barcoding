@@ -1,9 +1,5 @@
-import Filters from "../models/Filters";
 import EncodedData from "../models/EncodedData";
-import filterData, { validateFilters } from "./filterData";
-import EnData from "../models/EnData";
 import FilterOptionCount from "../models/FilterOptionCount";
-import RawBitArray from "../models/RawBitArray";
 import BitArray from "../BitArray";
 
 export default function filterOptionCounter<T>(

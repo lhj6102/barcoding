@@ -5,7 +5,9 @@ import RawData, { RawDataRow } from "./models/RawData";
 import decodeRow from "./decode/decodeRow";
 import filterAndSortEncodedData from "./encodedDataHandler/filterAndSortEncodedData";
 import Filters from "./models/Filters";
-import FilterOptionCount from "./models/FilterOptionCount";
+import FilterOptionCount, {
+  FilterOptionRatio,
+} from "./models/FilterOptionCount";
 import filterOptionCounter from "./encodedDataHandler/filterOptionCounter";
 
 /**
@@ -85,8 +87,22 @@ export default class Barcoding<T> {
     return this.#data.enData.length;
   }
 
-  getFilterOptionCount(): FilterOptionCount {
+  getFilterOptionCounts(): FilterOptionCount {
     return filterOptionCounter<T>(this.#data);
+  }
+
+  getFilterOptionRatios(): FilterOptionRatio {
+    const filterOptionCounts = this.getFilterOptionCounts();
+    const filterOptionRatios: FilterOptionRatio = {};
+    for (const filterGroup in filterOptionCounts) {
+      filterOptionRatios[filterGroup] = {};
+      const totalCount = this.length();
+      for (const filterOption in filterOptionCounts[filterGroup]) {
+        const count = filterOptionCounts[filterGroup][filterOption];
+        filterOptionRatios[filterGroup][filterOption] = count / totalCount;
+      }
+    }
+    return filterOptionRatios;
   }
 
   // filterData => return another Barcoding instance
