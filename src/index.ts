@@ -71,16 +71,12 @@ export default class Barcoding<T> {
     return this.#data.keys;
   }
 
-  decodeRow(index: number): RawDataRow<T> {
-    return decodeRow(this.#data.enData[index], this.#data.keys);
-  }
-
   filterAndSortData(
     sortGroup: string | "" = "",
     sortOption: string | "" = "",
     sortDirection: "asc" | "desc" = "desc",
     filters: Filters = {}
-  ) {
+  ): EncodedData<T> {
     return filterAndSortEncodedData<T>(
       this.#data,
       sortGroup,
@@ -110,6 +106,10 @@ export default class Barcoding<T> {
       }
     }
     return filterOptionRatios;
+  }
+
+  decodeRow(index: number): RawDataRow<T> {
+    return decodeRow(this.#data.enData[index], this.#data.keys);
   }
 
   decodeRows(startIndex: number, endIndex: number): RawDataRow<T>[] {

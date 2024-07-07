@@ -179,59 +179,61 @@ function generateRandomRow(id: number): RawDataRow<Identifier> {
     sortable,
     filterable,
   };
-
-  function generateSortable(groupElement: {
-    [groupName: string]: {
-      maxCount: number;
-      possibleOptions: string[];
-    };
-  }): RawDataRow<any>["sortable"] {
-    const sortable = {} as RawDataRow<any>["sortable"];
-    for (const groupName in groupElement) {
-      // 요소 n개 중 (0개~10개)를 선택해서 랜덤 값을 넣는다.
-      const possibleOptions = groupElement[groupName].possibleOptions;
-      const optionCount = randomInt(
-        0,
-        Math.min(possibleOptions.length, groupElement[groupName].maxCount)
-      );
-      const selectedOptions = sample(possibleOptions, optionCount);
-      const group = {} as RawDataRow<any>["sortable"][string];
-      for (const option of selectedOptions) {
-        group[option] = randomInt(0, 200000000);
-      }
-      sortable[groupName] = group;
-    }
-
-    return sortable;
-  }
-
-  function generateFilterable(groupElement: {
-    [groupName: string]: {
-      maxCount: number;
-      possibleOptions: string[];
-    };
-  }): RawDataRow<any>["filterable"] {
-    const filterable = {} as RawDataRow<any>["filterable"];
-    for (const groupName in groupElement) {
-      // 요소 n개 중 (0개~5개)를 선택해서 넣는다.
-      const possibleOptions = groupElement[groupName].possibleOptions;
-      const optionCount = randomInt(
-        0,
-        Math.min(possibleOptions.length, groupElement[groupName].maxCount)
-      );
-      const selectedOptions = sample(possibleOptions, optionCount);
-      filterable[groupName] = selectedOptions;
-    }
-
-    return filterable;
-  }
 }
 
-function randomInt(min: number, max: number) {
+export function generateSortable(groupElement: {
+  [groupName: string]: {
+    maxCount: number;
+    minCount?: number;
+    possibleOptions: string[];
+  };
+}): RawDataRow<any>["sortable"] {
+  const sortable = {} as RawDataRow<any>["sortable"];
+  for (const groupName in groupElement) {
+    // 요소 n개 중 (0개~10개)를 선택해서 랜덤 값을 넣는다.
+    const possibleOptions = groupElement[groupName].possibleOptions;
+    const optionCount = randomInt(
+      groupElement[groupName].minCount ?? 0,
+      Math.min(possibleOptions.length, groupElement[groupName].maxCount)
+    );
+    const selectedOptions = sample(possibleOptions, optionCount);
+    const group = {} as RawDataRow<any>["sortable"][string];
+    for (const option of selectedOptions) {
+      group[option] = randomInt(0, 200000000);
+    }
+    sortable[groupName] = group;
+  }
+
+  return sortable;
+}
+
+export function generateFilterable(groupElement: {
+  [groupName: string]: {
+    maxCount: number;
+    minCount?: number;
+    possibleOptions: string[];
+  };
+}): RawDataRow<any>["filterable"] {
+  const filterable = {} as RawDataRow<any>["filterable"];
+  for (const groupName in groupElement) {
+    // 요소 n개 중 (0개~5개)를 선택해서 넣는다.
+    const possibleOptions = groupElement[groupName].possibleOptions;
+    const optionCount = randomInt(
+      groupElement[groupName].minCount ?? 0,
+      Math.min(possibleOptions.length, groupElement[groupName].maxCount)
+    );
+    const selectedOptions = sample(possibleOptions, optionCount);
+    filterable[groupName] = selectedOptions;
+  }
+
+  return filterable;
+}
+
+export function randomInt(min: number, max: number) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
-function sample<T>(array: T[], count: number): T[] {
+export function sample<T>(array: T[], count: number): T[] {
   // Get count(n) random elements from array without duplication
   const result = [];
   const copy = array.slice();

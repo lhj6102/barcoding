@@ -12,16 +12,16 @@ type Identifier = {
 describe("should compare encoded data size", () => {
   test("should compare encoded data size", () => {
     const data = parseJSONFile<RawData<Identifier>>(
-      "./___test___/genData50000.json"
+      "./___test___/json/genData100000.json"
     );
     const dataBarcode = new Barcoding<Identifier>(data);
     const encodedData = dataBarcode.getEncodedData();
     const rawLength = JSON.stringify(data).length;
     const barcodeLength = JSON.stringify(dataBarcode.getEncodedData()).length;
-    saveToJSON(encodedData, "encodedData50000");
+    saveToJSON(encodedData, "encodedData100000");
   });
 });
 
 function saveToJSON(data: any, fileName: string) {
-  fs.writeFileSync(`./___test___/${fileName}.json`, JSON.stringify(data));
+  fs.writeFileSync(`./___test___/json/${fileName}.json`, JSON.stringify(data));
 }
