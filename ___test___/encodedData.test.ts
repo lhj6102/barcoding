@@ -61,6 +61,7 @@ describe("should use encoded data", () => {
     for (let i = 0; i < 10; i++) {
       console.log(filteredData.decodeRow(i));
     }
+    console.log(filteredData.length());
   });
 
   test("should count filter options", () => {

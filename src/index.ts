@@ -1,13 +1,20 @@
 import { encodeData } from "./encode/encodeData";
-import EncodedData from "./models/EncodedData";
-import Keys from "./models/Keys";
-import RawData, { RawDataRow } from "./models/RawData";
+import {
+  EncodedData,
+  Keys,
+  RawData,
+  RawDataRow,
+  FilterOptionCount,
+  Filters,
+  RawBitArray,
+  EnData,
+  EnDataRow,
+  Key,
+  FilterOptionRatio,
+} from "./models";
+
 import decodeRow from "./decode/decodeRow";
 import filterAndSortEncodedData from "./encodedDataHandler/filterAndSortEncodedData";
-import Filters from "./models/Filters";
-import FilterOptionCount, {
-  FilterOptionRatio,
-} from "./models/FilterOptionCount";
 import filterOptionCounter from "./encodedDataHandler/filterOptionCounter";
 
 /**
@@ -105,11 +112,26 @@ export default class Barcoding<T> {
     return filterOptionRatios;
   }
 
-  // filterData => return another Barcoding instance
-
-  // getTotalCount
-  // getFilterElementCount
-  // getFilterElementRatio
-
-  // decodeData (using index)
+  decodeRows(startIndex: number, endIndex: number): RawDataRow<T>[] {
+    const decodedRows: RawDataRow<T>[] = [];
+    for (let i = startIndex; i < endIndex; i++) {
+      decodedRows.push(this.decodeRow(i));
+    }
+    return decodedRows;
+  }
 }
+
+// export models
+export {
+  EncodedData,
+  Keys,
+  RawData,
+  RawDataRow,
+  FilterOptionCount,
+  Filters,
+  RawBitArray,
+  EnData,
+  EnDataRow,
+  Key,
+  FilterOptionRatio,
+};
