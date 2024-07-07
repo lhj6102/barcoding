@@ -189,6 +189,7 @@
 ];
 */
 
+import fs from "fs";
 import { RawDataRow } from "../../src";
 import {
   randomInt,
@@ -359,4 +360,16 @@ function generateRandomRow(id: number): RawDataRow<Identifier> {
     sortable,
     filterable,
   };
+}
+
+export default function generateRandomSorcDataSet(count: number) {
+  const data = [];
+  for (let i = 0; i < count; i++) {
+    data.push(generateRandomRow(i));
+  }
+  saveFile(`genSorceress${count}`, JSON.stringify(data));
+}
+
+function saveFile(fileName: string, data: string) {
+  fs.writeFileSync(`___test___/json/${fileName}.json`, data);
 }

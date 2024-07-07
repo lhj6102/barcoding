@@ -1,7 +1,7 @@
-import saveGeneratedDataSet from "./saveGeneratedDataSet";
+import generateRandomSorcDataSet from "./generateRandomSorcDataSet";
 
 describe("create gen data", () => {
   test("should create gen data", () => {
-    saveGeneratedDataSet(100000, "sorceressGen100000");
+    generateRandomSorcDataSet(100000);
   });
 });
