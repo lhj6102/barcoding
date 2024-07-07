@@ -16,7 +16,7 @@ describe("encode sorceresses", () => {
     const encodedData = barcoding.getEncodedData();
     expect(encodedData.enData.length).toBe(36);
     expect(barcoding.length()).toBe(36);
-    console.log(barcoding.getFilterOptionRatios());
+    console.log(barcoding.getFilterOptionCounts());
   });
 
   test("sort sorceresses", () => {
@@ -27,6 +27,7 @@ describe("encode sorceresses", () => {
       {
         engravings: {
           includes: ["점화"],
+          excludes: ["환류"],
         },
       }
     );

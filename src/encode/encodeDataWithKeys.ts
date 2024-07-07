@@ -20,20 +20,24 @@ export function encodeDataWithKeys<T>(keys: Keys, data: RawData<T>): EnData<T> {
     const filterableEncoded: {
       [groupName: string]: RawBitArray;
     } = {};
-    for (const groupName in sortable) {
+    for (const groupName in sortKey) {
       sortableEncoded[groupName] = new Array(sortKey[groupName].length).fill(0);
-      for (const sortableKey in sortable[groupName]) {
-        const index: number = getSortKeyIndex(groupName, sortableKey);
-        sortableEncoded[groupName][index] =
-          sortable[groupName][sortableKey] ?? 0;
+      if (groupName in sortable) {
+        for (const sortableKey in sortable[groupName]) {
+          const index: number = getSortKeyIndex(groupName, sortableKey);
+          sortableEncoded[groupName][index] =
+            sortable[groupName][sortableKey] ?? 0;
+        }
       }
     }
-    for (const groupName in filterable) {
+    for (const groupName in filterKey) {
       // binary encoding for filterable use array buffer then convert to string
       const filterableArray = new BitArray(filterKey[groupName].length);
-      for (const value of filterable[groupName]) {
-        const index: number = getFilterKeyIndex(groupName, value);
-        filterableArray.setBit(index);
+      if (groupName in filterable) {
+        for (const value of filterable[groupName]) {
+          const index: number = getFilterKeyIndex(groupName, value);
+          filterableArray.setBit(index);
+        }
       }
       filterableEncoded[groupName] = filterableArray.getBitArray();
     }

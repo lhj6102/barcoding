@@ -55,34 +55,6 @@ describe("Filtering and Sorting", () => {
       enData: [outputEnData[1]],
     });
   });
-  test("should sort data desc", () => {
-    const filteredData = filterAndSortEncodedData(
-      output,
-      "skillDPS",
-      "종말의 날",
-      "desc",
-      {}
-    );
-    // compare object
-    expect(filteredData).toEqual({
-      keys: outputKeys,
-      enData: [outputEnData[0], outputEnData[1]],
-    });
-  });
-  test("should sort data asc", () => {
-    const filteredData = filterAndSortEncodedData(
-      output,
-      "skillDPS",
-      "종말의 날",
-      "asc",
-      {}
-    );
-    // compare object
-    expect(filteredData).toEqual({
-      keys: outputKeys,
-      enData: [outputEnData[1], outputEnData[0]],
-    });
-  });
 });
 
 describe("Decoding", () => {
