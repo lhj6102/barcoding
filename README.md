@@ -27,6 +27,11 @@ Encode chart data to barcode to lower size. Data has three type: identifier, sor
 keys: {
     sortable: {
         info: ["age", "height"],
+        score: ["math", "science"]
+    },
+    filterable: {
+        inBag: ["book", "pencil", "pen", "ruler"],
+        subscribes: ["MrBeast", "BTS"]
     }
 }
 enData: [

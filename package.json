@@ -1,6 +1,6 @@
 {
   "name": "barcoding",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Encode chart data to barcode to lower size. Filter and sort data before decode.",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
