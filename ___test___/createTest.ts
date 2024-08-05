@@ -1,4 +1,4 @@
-import genData100000 from "./genData100000.json";
+import genData1000 from "./json/genData1000.json";
 import Barcoding from "../src";
 import RawData from "../src/models/RawData";
 import fs from "fs";
@@ -10,7 +10,7 @@ type Identifier = {
 };
 
 function createData() {
-  const data100000 = genData100000 as RawData<Identifier>;
+  const data100000 = genData1000 as RawData<Identifier>;
   const data100000Barcode = new Barcoding<Identifier>(data100000);
   const encodedData = data100000Barcode.getEncodedData();
   const rawLength = JSON.stringify(data100000).length;
