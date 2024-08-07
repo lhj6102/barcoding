@@ -1,4 +1,4 @@
-import Barcoding from "../src";
+import { Barcoding } from "../src";
 import RawData from "../src/models/RawData";
 import parseJSONFile from "./parseJSONFile";
 import fs from "fs";

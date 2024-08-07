@@ -1,4 +1,4 @@
-import Barcoding, { RawData } from "../../src";
+import { RawData, Barcoding } from "../../src";
 import parseJSONFile from "../parseJSONFile";
 import generateRandomSorcDataSet from "./generateRandomSorcDataSet";
 type Identifier = {

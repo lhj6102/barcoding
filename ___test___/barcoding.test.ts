@@ -3,7 +3,7 @@ import { encodeData } from "../src/encode/encodeData";
 import { generateKeys } from "../src/encode/generateKeys";
 import filterAndSortEncodedData from "../src/encodedDataHandler/filterAndSortEncodedData";
 const { keys: outputKeys, enData: outputEnData } = output;
-import Barcoding from "../src/index";
+import { Barcoding } from "../src/index";
 
 describe("Encoding", () => {
   test("should get correct keys", () => {

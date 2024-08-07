@@ -15,6 +15,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 var _Barcoding_instances, _Barcoding_data, _Barcoding_isSet, _Barcoding_encodeData;
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.Barcoding = void 0;
 const encodeData_1 = require("./encode/encodeData");
 const decodeRow_1 = __importDefault(require("./decode/decodeRow"));
 const filterAndSortEncodedData_1 = __importDefault(require("./encodedDataHandler/filterAndSortEncodedData"));
@@ -99,7 +100,7 @@ class Barcoding {
         return decodedRows;
     }
 }
+exports.Barcoding = Barcoding;
 _Barcoding_data = new WeakMap(), _Barcoding_isSet = new WeakMap(), _Barcoding_instances = new WeakSet(), _Barcoding_encodeData = function _Barcoding_encodeData(rawData) {
     return (0, encodeData_1.encodeData)(rawData);
 };
-exports.default = Barcoding;

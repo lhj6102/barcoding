@@ -1,5 +1,5 @@
 import parseJSONFile from "../parseJSONFile";
-import Barcoding from "../../src";
+import { Barcoding } from "../../src";
 import RawData from "../../src/models/RawData";
 
 type Identifier = {

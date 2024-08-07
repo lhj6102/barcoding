@@ -1,7 +1,7 @@
 import genData2 from "./json/genData2.json";
 import genData1000 from "./json/genData1000.json";
 import genData10000 from "./json/genData10000.json";
-import Barcoding from "../src";
+import { Barcoding } from "../src";
 import RawData from "../src/models/RawData";
 
 type Identifier = {

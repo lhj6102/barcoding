@@ -2,15 +2,13 @@
   "name": "barcoding",
   "version": "1.0.14",
   "description": "Encode chart data to barcode to lower size. Filter and sort data before decode.",
-  "main": "dist/cjs/index.cjs",
+  "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "types": "dist/esm/index.d.ts",
-  "type": "module",
   "exports": {
     ".": {
-      "require": "./dist/cjs/index.cjs",
-      "import": "./dist/esm/index.js",
-      "default": "./dist/cjs/index.cjs"
+      "require": "./dist/cjs/index.js",
+      "import": "./dist/esm/index.js"
     },
     "./models": {
       "import": "./dist/esm/models/index.d.ts"
@@ -19,8 +17,8 @@
   "scripts": {
     "build": "npm run build:esm && npm run build:cjs",
     "build:esm": "tsc",
-    "build:cjs": "tsc --project tsconfig.cjs.json && npm run rename:cjs",
-    "rename:cjs": "renamer --find .js --replace .cjs dist/cjs/**/*.js",
+    "build:cjs": "tsc --project tsconfig.cjs.json",
+    "rename:cjs": "renamer --find .js --replace .cjs dist/cjs/**/*.js && renamer --find .js.map --replace .cjs dist/cjs/*.js",
     "test": "jest"
   },
   "keywords": [],

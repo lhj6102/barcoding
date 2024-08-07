@@ -1,6 +1,6 @@
 // import encodedData50000 from "./json/encodedData50000.json";
 import EncodedData from "../src/models/EncodedData";
-import Barcoding from "../src";
+import { Barcoding } from "../src";
 import parseJSONFile from "./parseJSONFile";
 
 type Identifier = {

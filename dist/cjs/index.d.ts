@@ -2,7 +2,7 @@ import { EncodedData, Keys, RawData, RawDataRow, FilterOptionCount, Filters, Raw
 /**
  * Barcode generation and encoded data handling
  */
-export default class Barcoding<T> {
+declare class Barcoding<T> {
     #private;
     constructor(inputData?: RawData<T> | EncodedData<T>);
     setData(data: EncodedData<T>): void;
@@ -16,4 +16,4 @@ export default class Barcoding<T> {
     decodeRow(index: number): RawDataRow<T>;
     decodeRows(startIndex: number, endIndex: number): RawDataRow<T>[];
 }
-export { EncodedData, Keys, RawData, RawDataRow, FilterOptionCount, Filters, RawBitArray, EnData, EnDataRow, Key, FilterOptionRatio, };
+export { Barcoding, EncodedData, Keys, RawData, RawDataRow, FilterOptionCount, Filters, RawBitArray, EnData, EnDataRow, Key, FilterOptionRatio, };

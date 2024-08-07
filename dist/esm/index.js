@@ -97,4 +97,5 @@ class Barcoding {
 _Barcoding_data = new WeakMap(), _Barcoding_isSet = new WeakMap(), _Barcoding_instances = new WeakSet(), _Barcoding_encodeData = function _Barcoding_encodeData(rawData) {
     return encodeData(rawData);
 };
-export default Barcoding;
+// export models
+export { Barcoding, };

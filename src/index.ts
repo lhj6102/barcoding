@@ -20,7 +20,7 @@ import filterOptionCounter from "./encodedDataHandler/filterOptionCounter";
 /**
  * Barcode generation and encoded data handling
  */
-export default class Barcoding<T> {
+class Barcoding<T> {
   #data: EncodedData<T>;
   #isSet: boolean;
   constructor(inputData?: RawData<T> | EncodedData<T>) {
@@ -123,6 +123,7 @@ export default class Barcoding<T> {
 
 // export models
 export {
+  Barcoding,
   EncodedData,
   Keys,
   RawData,
