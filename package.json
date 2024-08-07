@@ -17,7 +17,7 @@
     "build": "npm run build:esm && npm run build:cjs",
     "build:esm": "tsc",
     "build:cjs": "tsc --project tsconfig.cjs.json && npm run rename:cjs",
-    "rename:cjs": "rename 's/\\.js$/.cjs/' dist/cjs/**/*.js",
+    "rename:cjs": "renamer --find .js --replace .cjs dist/cjs/**/*.js",
     "test": "jest"
   },
   "keywords": [],
