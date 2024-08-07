@@ -88,7 +88,8 @@ class Barcoding {
     }
     decodeRows(startIndex, endIndex) {
         const decodedRows = [];
-        for (let i = startIndex; i < endIndex; i++) {
+        const maxIndex = Math.min(endIndex, this.length());
+        for (let i = startIndex; i < maxIndex; i++) {
             decodedRows.push(this.decodeRow(i));
         }
         return decodedRows;
