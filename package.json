@@ -1,16 +1,16 @@
 {
   "name": "barcoding",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Encode chart data to barcode to lower size. Filter and sort data before decode.",
-  "main": "dist/cjs/index.js",
-  "module": "dist/esm/index.js",
-  "types": "dist/esm/index.d.ts",
+  "main": "dist/cjs/src/index.js",
+  "module": "dist/esm/src/index.js",
+  "types": "dist/esm/src/index.d.ts",
   "type": "module",
   "exports": {
     ".": {
-      "require": "./dist/cjs/index.js",
-      "import": "./dist/esm/index.js",
-      "types": "./dist/esm/index.d.ts"
+      "require": "./dist/cjs/src/index.js",
+      "import": "./dist/esm/src/index.js",
+      "types": "./dist/esm/src/index.d.ts"
     }
   },
   "scripts": {
