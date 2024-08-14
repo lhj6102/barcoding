@@ -78,7 +78,8 @@ class Barcoding {
             const totalCount = this.length();
             for (const filterOption in filterOptionCounts[filterGroup]) {
                 const count = filterOptionCounts[filterGroup][filterOption];
-                filterOptionRatios[filterGroup][filterOption] = count / totalCount;
+                filterOptionRatios[filterGroup][filterOption] =
+                    totalCount > 0 ? count / totalCount : 0;
             }
         }
         return filterOptionRatios;

@@ -18,8 +18,8 @@
     "build": "npm run build:esm && npm run build:cjs",
     "build:esm": "tsc",
     "build:cjs": "tsc --project tsconfig.cjs.json",
-    "rename:cjs": "renamer --find .js --replace .cjs dist/cjs/**/*.js && renamer --find .js.map --replace .cjs dist/cjs/*.js",
-    "test": "jest"
+    "test": "jest",
+    "deploy": "npm run build && npm publish --access public"
   },
   "keywords": [],
   "author": "lhj6102 <lhj6102@gmail.com>",
